@@ -18,7 +18,7 @@ jobs:
             ~/.cargo/registry/cache
             ~/.cargo/git
             ./target
-          key: ${{runner.os}}-${{hashFiles('Cargo.lock, Cargo.toml, rust-toolchain')}}
+          key: ${{runner.os}}-${{hashFiles('Cargo.lock', 'Cargo.toml', 'rust-toolchain')}}
       - name: Install docker musl environment
         run: |
           docker pull alpine
