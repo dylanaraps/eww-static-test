@@ -1,37 +1,41 @@
 name: build
 
 on:
-   push:
-      branches: [master]
-   pull_request:
-      branches: [master]
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  ACTIONS_RUNNER_DEBUG: true 
+  ACTIONS_STEP_DEBUG: true
 
 jobs:
-   build:
-      runs-on: ubuntu-latest
-      steps:
-         - uses: actions/checkout@v2
-         - uses: Swatinem/rust-cache@v1
-         - name: Install docker musl environment
-           run: |
-             docker pull alpine
-             docker run \
-               -v "$HOME/.cargo:$HOME/.cargo" \
-               -v "$PWD:/eww" \
-               -v "$PWD/.github/workflows/build.sh:/build.sh" \
-               alpine sh -e /build.sh
-         - uses: actions/upload-artifact@v2
-           with:
-             name: x11
-             path: x11/eww
-             if-no-files-found: error
-         - uses: actions/upload-artifact@v2
-           with:
-             name: wayland
-             path: wayland/eww
-             if-no-files-found: error
-         - uses: actions/upload-artifact@v2
-           with:
-             name: no-x11-wayland
-             path: no-x11-wayland/eww
-             if-no-files-found: error
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: Swatinem/rust-cache@v1
+      - name: Install docker musl environment
+        run: |
+          docker pull alpine
+          docker run \
+            -v "$HOME/.cargo:$HOME/.cargo" \
+            -v "$PWD:/eww" \
+            -v "$PWD/.github/workflows/build.sh:/build.sh" \
+            alpine sh -e /build.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: x11
+          path: x11/eww
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v2
+        with:
+          name: wayland
+          path: wayland/eww
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v2
+        with:
+          name: no-x11-wayland
+          path: no-x11-wayland/eww
+          if-no-files-found: error
