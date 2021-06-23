@@ -19,7 +19,7 @@ jobs:
              docker pull alpine
              docker run alpine apk add --no-cache build-base gtk+3.0-dev gtk-layer-shell-dev rustup
          - name: Install rust musl target
-           run: docker run gliderlabs/alpine rustup target add x86_64-unknown-linux-musl
+           run: docker run rustup target add x86_64-unknown-linux-musl
          - uses: actions/checkout@v2
          - uses: Swatinem/rust-cache@v1
          - name: Build x11
