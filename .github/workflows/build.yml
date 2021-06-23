@@ -25,7 +25,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: docker pull alpine
       - name: Setup build environment
-        run: | 
+        run: |
           docker run \
             -v "$HOME/.cargo:$HOME/.cargo" \
             -v "$PWD:/eww" \
