@@ -14,11 +14,10 @@ run rustup-init -y \
     --default-toolchain nightly
 
 run export PATH=$PATH:$HOME/.cargo/bin
-
-run rustup target add x86_64-unknown-linux-musl
-
 run export RUSTFLAGS="-C target-feature=+crt-static -C link-self-contained=yes"
 run export CARGO_TERM_COLOR=always
+
+cd /eww
 
 run cargo check \
     --no-default-features \
