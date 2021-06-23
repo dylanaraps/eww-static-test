@@ -1,8 +1,6 @@
-#!/bin/sh
+#!/bin/sh -e
 
 run() { printf '%s\n' "$*"; "$@"; }
-
-set -e 
 
 run apk add --no-cache \
     rustup \
@@ -19,17 +17,10 @@ run export CARGO_TERM_COLOR=always
 
 cd /eww
 
-run cargo check \
-    --no-default-features \
-    --features=x11 \
-    --target x86_64-unknown-linux-musl
-
-run cargo check \
-    --no-default-features \
-    --features=wayland \
-    --target x86_64-unknown-linux-musl
-
-run cargo check \
-    --no-default-features \
-    --features=no-x11-wayland \
-    --target x86_64-unknown-linux-musl
+for f in x11 wayland no-x11-wayland; do
+    run cargo build \
+        --release \
+        --no-default-features \
+        --features="$f" \
+        --target x86_64-unknown-linux-musl
+done
