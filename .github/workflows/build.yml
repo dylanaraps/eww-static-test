@@ -18,15 +18,14 @@ jobs:
          - name: Set up
            uses: actions-rs/toolchain@v1
            with:
-              toolchain: nightly
+              toolchain: x86_64-unknown-linux-musl
               override: true
               components: rustfmt
          - uses: actions/checkout@v2
          - uses: Swatinem/rust-cache@v1
          - name: Build x11
-           run: cargo check --no-default-features --features=x11
+           run: cargo check --no-default-features --features=x11 -C target-feature=+crt-static -C link-self-contained=yes 
          - name: Build wayland
-           run: cargo check --no-default-features --features=wayland
+           run: cargo check --no-default-features --features=wayland -C target-feature=+crt-static -C link-self-contained=yes
          - name: Build no-x11-wayland
-           run: cargo check --no-default-features --features=no-x11-wayland
-
+           run: cargo check --no-default-features --features=no-x11-wayland -C target-feature=+crt-static -C link-self-contained=yes
