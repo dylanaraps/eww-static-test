@@ -20,10 +20,12 @@ jobs:
              name: x11
              path: x11/eww
              if-no-files-found: error
+         - uses: actions/upload-artifact@v2
            with:
              name: wayland
              path: wayland/eww
              if-no-files-found: error
+         - uses: actions/upload-artifact@v2
            with:
              name: no-x11-wayland
              path: no-x11-wayland/eww
