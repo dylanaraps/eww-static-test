@@ -14,20 +14,9 @@ jobs:
    build-static:
       runs-on: ubuntu-latest
       steps:
+         - uses: actions/checkout@v2
+         - uses: Swatinem/rust-cache@v1
          - name: Install docker musl environment
            run: |
              docker pull alpine
-             docker run alpine apk add --no-cache rustup build-base gtk+3.0-dev gtk-layer-shell-dev
-             docker run alpine cc --version
-         - name: Install rust musl target
-           run: |
-             docker run alpine rustup-init -y --default-toolchain nightly
-             docker run -e "PATH=/bin:/usr/bin:$HOME/.cargo/bin" alpine rustup target add x86_64-unknown-linux-musl
-         - uses: actions/checkout@v2
-         - uses: Swatinem/rust-cache@v1
-         - name: Build x11
-           run: docker run -e "PATH=/bin:/usr/bin:$HOME/.cargo/bin" alpine cargo check --no-default-features --features=x11 --target x86_64-unknown-linux-musl
-         - name: Build wayland
-           run: docker run -e "PATH=/bin:/usr/bin:$HOME/.cargo/bin" alpine cargo check --no-default-features --features=wayland --target x86_64-unknown-linux-musl
-         - name: Build no-x11-wayland
-           run: docker run -e "PATH=/bin:/usr/bin:$HOME/.cargo/bin" alpine cargo check --no-default-features --features=no-x11-wayland --target x86_64-unknown-linux-musl
+             docker run -v "$PWD/.github/workflows/build.sh:/build.sh alpine sh /build.sh
