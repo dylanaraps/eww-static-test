@@ -25,11 +25,11 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: docker pull alpine
       - name: Setup build environment
-        run: docker run \
-              -v "$HOME/.cargo:$HOME/.cargo" \
-              -v "$PWD:/eww" \
-              -v "$PWD/.github/workflows/build.sh:/build.sh" \
-              alpine sh -e /build.sh
+        run: | docker run \
+                 -v "$HOME/.cargo:$HOME/.cargo" \
+                 -v "$PWD:/eww" \
+                 -v "$PWD/.github/workflows/build.sh:/build.sh" \
+                 alpine sh -e /build.sh
       - uses: actions/upload-artifact@v2
         with:
           name: x11
