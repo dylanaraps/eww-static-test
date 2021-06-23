@@ -26,5 +26,5 @@ for f in x11 wayland no-x11-wayland; do
         --target x86_64-unknown-linux-musl
 
     run mkdir -p "$f"
-    run cp target/x86_64-unknown-linux-musl/*/eww "$f"
+    run cp target/x86_64-unknown-linux-musl/release/eww "$f"
 done
