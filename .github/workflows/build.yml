@@ -6,17 +6,14 @@ on:
    pull_request:
       branches: [master]
 
-env:
-   CARGO_TERM_COLOR: always
-   RUSTFLAGS: -C target-feature=+crt-static -C link-self-contained=yes
-
 jobs:
    build-static:
       runs-on: ubuntu-latest
       steps:
          - uses: actions/checkout@v2
-         - uses: Swatinem/rust-cache@v1
          - name: Install docker musl environment
            run: |
              docker pull alpine
-             docker run -v "$PWD/.github/workflows/build.sh:/build.sh alpine sh /build.sh
+             pwd
+             docker cp . alpine:/eww
+             docker run -v "$PWD/.github/workflows/build.sh:/build.sh" alpine sh /build.sh
