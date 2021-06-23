@@ -20,6 +20,7 @@ jobs:
              docker run alpine apk add --no-cache build-base gtk+3.0-dev gtk-layer-shell-dev rustup
          - name: Install rust musl target
            run: |
+             docker run alpine env
              docker run alpine rustup-init
              docker run -e "PATH=/bin:/usr/bin:$HOME/.cargo/bin" alpine rustup target add x86_64-unknown-linux-musl
          - uses: actions/checkout@v2
