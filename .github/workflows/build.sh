@@ -12,7 +12,7 @@ run rustup-init -y \
     --default-toolchain nightly
 
 run export PATH=$PATH:$HOME/.cargo/bin
-run export RUSTFLAGS="-C target-feature=+crt-static -C link-self-contained=yes"
+run export RUSTFLAGS="-Crelocation-model-static -Ctarget-feature=+crt-static"
 run export CARGO_TERM_COLOR=always
 run export CARGO_INCREMENTAL=0
 
@@ -23,7 +23,7 @@ for f in x11 wayland no-x11-wayland; do
         --release \
         --no-default-features \
         --features="$f" \
-        --target x86_64-unknown-linux-musl
+        --target=x86_64-unknown-linux-musl
 
     run mkdir -p "$f"
     run cp target/x86_64-unknown-linux-musl/release/eww "$f"
