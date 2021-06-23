@@ -11,10 +11,11 @@ jobs:
       runs-on: ubuntu-latest
       steps:
          - uses: actions/checkout@v2
+         - uses: Swatinem/rust-cache@v1
          - name: Install docker musl environment
            run: |
              docker pull alpine
-             docker run -v "$PWD:/eww" -v "$PWD/.github/workflows/build.sh:/build.sh" alpine sh /build.sh
+             docker run -v "$HOME/.cargo:$HOME/.cargo" -v "$PWD:/eww" -v "$PWD/.github/workflows/build.sh:/build.sh" alpine sh /build.sh
          - uses: actions/upload-artifact@v2
            with:
              name: x11
