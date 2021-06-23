@@ -17,8 +17,8 @@ jobs:
          - name: Install docker musl environment
            run: |
              docker pull gliderlabs/alpine
-             docker run gliderlabs/alpine echo http://mirror.yandex.ru/mirrors/alpine/edge/main > /etc/apk/repositories; \
-             docker run gliderlabs/alpine echo http://mirror.yandex.ru/mirrors/alpine/edge/community >> /etc/apk/repositories
+             docker run gliderlabs/alpine sh -c 'echo http://mirror.yandex.ru/mirrors/alpine/edge/main > /etc/apk/repositories'
+             docker run gliderlabs/alpine sh -c 'echo http://mirror.yandex.ru/mirrors/alpine/edge/community >> /etc/apk/repositories'
              docker run gliderlabs/alpine apk add --no-cache build-base gtk+3.0-dev gtk-layer-shell-dev rustup
          - name: Install rust musl target
            run: docker run gliderlabs/alpine rustup target add x86_64-unknown-linux-musl
