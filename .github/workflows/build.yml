@@ -19,12 +19,12 @@ jobs:
              docker pull alpine
              docker run alpine apk add --no-cache build-base gtk+3.0-dev gtk-layer-shell-dev rustup
          - name: Install rust musl target
-           run: docker run rustup target add x86_64-unknown-linux-musl
+           run: docker run alpine rustup target add x86_64-unknown-linux-musl
          - uses: actions/checkout@v2
          - uses: Swatinem/rust-cache@v1
          - name: Build x11
-           run: docker run cargo check --no-default-features --features=x11 --target x86_64-unknown-linux-musl
+           run: docker run alpine cargo check --no-default-features --features=x11 --target x86_64-unknown-linux-musl
          - name: Build wayland
-           run: docker run cargo check --no-default-features --features=wayland --target x86_64-unknown-linux-musl
+           run: docker run alpine cargo check --no-default-features --features=wayland --target x86_64-unknown-linux-musl
          - name: Build no-x11-wayland
-           run: docker run cargo check --no-default-features --features=no-x11-wayland --target x86_64-unknown-linux-musl
+           run: docker run alpine cargo check --no-default-features --features=no-x11-wayland --target x86_64-unknown-linux-musl
