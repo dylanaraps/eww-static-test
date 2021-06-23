@@ -2,11 +2,15 @@
 
 run() { printf '%s\n' "$*"; "$@"; }
 
+# TODO: These must be static.
+# gtk+3.0-dev \
+# gtk-layer-shell-dev \
 run apk add --no-cache \
     rustup \
     build-base \
-    gtk+3.0-dev \
-    gtk-layer-shell-dev
+    glib-static \
+    harfbuzz-static \
+    cairo-static
 
 run rustup-init -y \
     --default-toolchain nightly
