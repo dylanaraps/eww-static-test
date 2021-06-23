@@ -19,7 +19,6 @@ cd /eww
 
 for f in x11 wayland no-x11-wayland; do
     run cargo build \
-        --release \
         --no-default-features \
         --features="$f" \
         --target x86_64-unknown-linux-musl
