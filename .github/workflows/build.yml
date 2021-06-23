@@ -14,5 +14,4 @@ jobs:
          - name: Install docker musl environment
            run: |
              docker pull alpine
-             docker cp "$PWD" alpine:/
-             docker run -v "$PWD/.github/workflows/build.sh:/build.sh" alpine sh /build.sh
+             docker run -v "$PWD:/eww" -v "$PWD/.github/workflows/build.sh:/build.sh" alpine sh /build.sh
