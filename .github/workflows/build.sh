@@ -12,7 +12,7 @@ run rustup-init -y \
     --default-toolchain nightly
 
 run export PATH=$PATH:$HOME/.cargo/bin
-run export RUSTFLAGS="-Crelocation-model-static -Ctarget-feature=+crt-static"
+run export RUSTFLAGS="-Crelocation-model=static -Ctarget-feature=+crt-static"
 run export CARGO_TERM_COLOR=always
 run export CARGO_INCREMENTAL=0
 

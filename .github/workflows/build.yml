@@ -12,6 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
+        id: cache
         with:
           path: |
             /var/lib/docker
@@ -20,14 +21,15 @@ jobs:
             ~/.cargo/git
             ./target
           key: ${{runner.os}}-${{hashFiles('Cargo.lock', 'Cargo.toml', 'rust-toolchain')}}
-      - name: Install docker musl environment
-        run: |
-          docker pull alpine
-          docker run \
-            -v "$HOME/.cargo:$HOME/.cargo" \
-            -v "$PWD:/eww" \
-            -v "$PWD/.github/workflows/build.sh:/build.sh" \
-            alpine sh -e /build.sh
+      - name: Download Alpine container
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: docker pull alpine
+      - name: Setup build environment
+        run: docker run \
+              -v "$HOME/.cargo:$HOME/.cargo" \
+              -v "$PWD:/eww" \
+              -v "$PWD/.github/workflows/build.sh:/build.sh" \
+              alpine sh -e /build.sh
       - uses: actions/upload-artifact@v2
         with:
           name: x11
