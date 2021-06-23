@@ -14,16 +14,17 @@ run rustup-init -y \
 run export PATH=$PATH:$HOME/.cargo/bin
 run export RUSTFLAGS="-C target-feature=+crt-static -C link-self-contained=yes"
 run export CARGO_TERM_COLOR=always
+run export CARGO_INCREMENTAL=0
 
 cd /eww
 
 for f in x11 wayland no-x11-wayland; do
     run cargo build \
+        --release \
         --no-default-features \
         --features="$f" \
         --target x86_64-unknown-linux-musl
 
     run mkdir -p "$f"
-    run find target
-    run cp target/*/eww "$f"
+    run cp target/x86_64-unknown-linux-musl/*/eww "$f"
 done
